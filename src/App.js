@@ -45,7 +45,8 @@ const App = () => {
   const filteredCountries = countries.filter(country =>
     country.name.common.toLowerCase().includes(search.toLowerCase())
   );
-  
+  console.log(filteredCountries); // Verify "ind" shows 3 results
+
 
   return (
     <div className="app">
