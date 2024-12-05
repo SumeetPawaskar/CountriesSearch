@@ -5,13 +5,33 @@ import './App.css';
 const App = () => {
   const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const fetchCountries = async () => {
+  //     try {
+  //       const response = await fetch('https://restcountries.com/v3.1/all');
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       const data = await response.json();
+  //       setCountries(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching countries:', error);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchCountries();
+  // }, []);
+
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         const response = await fetch('https://restcountries.com/v3.1/all');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        if (!response.ok) { // Ensure proper status check
+          throw new Error(`HTTP status: ${response.status}`);
         }
         const data = await response.json();
         setCountries(data);
@@ -21,10 +41,11 @@ const App = () => {
     };
     fetchCountries();
   }, []);
-
+  
   const filteredCountries = countries.filter(country =>
     country.name.common.toLowerCase().includes(search.toLowerCase())
   );
+  
 
   return (
     <div className="app">
@@ -34,16 +55,21 @@ const App = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+      
       <div className="country-grid">
-        {filteredCountries.length > 0 ? (
-          filteredCountries.map((country) => (
-            <CountryCard key={country.cca3} country={country} />
-          ))
-        ) : (
-          <p>No countries found</p>
-        )}
+      {filteredCountries.length > 0 ? (
+  filteredCountries.map((country) => (
+    <CountryCard key={country.cca3} country={country} />
+  ))
+) : (
+  <p>No countries found</p>
+)}
+
+
+        
       </div>
     </div>
+    
   );
 };
 
