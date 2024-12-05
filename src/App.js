@@ -59,9 +59,16 @@ const App = () => {
       
       <div className="country-grid">
       {filteredCountries.length > 0 ? (
-  filteredCountries.map((country) => (
+        
+  // filteredCountries.map((country) => (
+  //   <CountryCard key={country.cca3} country={country} />
+  // ))
+  
+  <div className="countryGrid">
+  {filteredCountries.map((country) => (
     <CountryCard key={country.cca3} country={country} />
-  ))
+  ))}
+</div>
 ) : (
   <p>No countries found</p>
 )}
